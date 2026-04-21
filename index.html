@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NASA Apollo GOD MODE</title>
+<title>NASA Hybrid Mission Control</title>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
 
@@ -12,38 +12,20 @@
 <style>
 body {
   margin: 0;
-  overflow-x: hidden;
-  font-family: Arial, sans-serif;
-  color: white;
+  font-family: Arial;
   background: black;
+  color: white;
+  overflow-x: hidden;
 }
 
-/* 🌌 star canvas */
+/* 🌌 CANVAS LAYERS */
 #space, #earth {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-/* 🧑‍🚀 intro */
-.intro {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.intro h1 {
-  font-family: Orbitron;
-  font-size: 40px;
-}
-
-.intro p {
-  color: #aaa;
+  z-index: -2;
 }
 
 /* 🛰️ HUD */
@@ -55,155 +37,246 @@ body {
   padding: 10px;
   border-radius: 10px;
   font-size: 12px;
+  z-index: 10;
 }
 
-/* sections */
-.section {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* HEADER */
+header {
+  text-align: center;
+  padding: 30px;
+  font-family: Orbitron;
+}
+
+/* SEARCH */
+.search {
+  text-align: center;
+  margin: 10px;
+}
+
+input {
+  padding: 10px;
+  width: 60%;
+  border-radius: 10px;
+  border: none;
+}
+
+/* 🧑‍🚀 GRID */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  padding: 20px;
 }
 
 .card {
   background: rgba(255,255,255,0.08);
+  padding: 10px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.07);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* 🌌 STORY */
+.section {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box {
+  background: rgba(255,255,255,0.08);
   padding: 20px;
   border-radius: 15px;
   max-width: 500px;
+  text-align: center;
   backdrop-filter: blur(8px);
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #111;
+  padding: 20px;
+  border-radius: 15px;
+  width: 300px;
   text-align: center;
 }
 
-/* button */
-button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 8px;
-  background: #3b82f6;
-  color: white;
-  cursor: pointer;
+.modal img {
+  width: 100%;
+  border-radius: 10px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🌌 stars -->
+<!-- 🌌 STARS -->
 <canvas id="space"></canvas>
 
-<!-- 🌍 earth -->
+<!-- 🌍 EARTH -->
 <canvas id="earth"></canvas>
 
 <!-- 🛰️ HUD -->
 <div class="hud">
-  <div>MISSION: APOLLO PROGRAM</div>
+  <div>MISSION CONTROL: APOLLO</div>
   <div id="status">STATUS: ACTIVE</div>
-  <button onclick="toggleSound()">🔊 SOUND</button>
 </div>
 
-<!-- 🚀 intro -->
-<div class="intro">
-  <h1>NASA MISSION CONTROL</h1>
-  <p>Scroll to explore Apollo Moon missions</p>
+<header>
+  <h1>NASA HYBRID MISSION CONTROL 🚀</h1>
+</header>
+
+<!-- 🔎 SEARCH -->
+<div class="search">
+<input id="search" placeholder="Search astronaut..." onkeyup="searchCards()">
 </div>
 
-<!-- 🧑‍🚀 story -->
+<!-- 🧑‍🚀 ASTRONAUT DATABASE -->
+<div class="container" id="cards">
+
+<div class="card" onclick="openModal('Neil Armstrong','Apollo 11','First human on Moon','https://images-assets.nasa.gov/image/AS11-40-5903/AS11-40-5903~orig.jpg')">
+<img src="https://images-assets.nasa.gov/image/AS11-40-5903/AS11-40-5903~orig.jpg">
+<h3>Neil Armstrong</h3>
+</div>
+
+<div class="card" onclick="openModal('Buzz Aldrin','Apollo 11','Second human on Moon','https://images-assets.nasa.gov/image/AS11-40-5904/AS11-40-5904~orig.jpg')">
+<img src="https://images-assets.nasa.gov/image/AS11-40-5904/AS11-40-5904~orig.jpg">
+<h3>Buzz Aldrin</h3>
+</div>
+
+<div class="card" onclick="openModal('Alan Shepard','Apollo 14','Fifth human on Moon','https://images-assets.nasa.gov/image/AS14-66-9304/AS14-66-9304~orig.jpg')">
+<img src="https://images-assets.nasa.gov/image/AS14-66-9304/AS14-66-9304~orig.jpg">
+<h3>Alan Shepard</h3>
+</div>
+
+<div class="card" onclick="openModal('Eugene Cernan','Apollo 17','Last human on Moon','https://images-assets.nasa.gov/image/AS17-134-20382/AS17-134-20382~orig.jpg')">
+<img src="https://images-assets.nasa.gov/image/AS17-134-20382/AS17-134-20382~orig.jpg">
+<h3>Eugene Cernan</h3>
+</div>
+
+</div>
+
+<!-- 🌌 STORY MODE -->
 <div class="section">
-  <div class="card">
-    <h2>1969 — Apollo 11</h2>
-    <p>Neil Armstrong becomes first human on the Moon.</p>
+  <div class="box">
+    <h2>Apollo 11 (1969)</h2>
+    <p>First human landing on the Moon.</p>
   </div>
 </div>
 
 <div class="section">
-  <div class="card">
-    <h2>“One small step…”</h2>
-    <p>The most famous words in space history.</p>
+  <div class="box">
+    <h2>Apollo 12–15</h2>
+    <p>Scientific exploration missions across lunar surface.</p>
   </div>
 </div>
 
 <div class="section">
-  <div class="card">
-    <h2>1972 — Apollo 17</h2>
-    <p>Final Moon landing mission.</p>
+  <div class="box">
+    <h2>Apollo 17 (1972)</h2>
+    <p>Final mission to the Moon — end of Apollo era.</p>
   </div>
 </div>
 
-<!-- 🔊 audio -->
-<audio id="audio" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_c8a7b8c2f3.mp3?filename=space-ambient-118841.mp3">
-</audio>
+<!-- 🪐 MODAL -->
+<div class="modal" id="modal" onclick="closeModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <img id="img">
+    <h2 id="name"></h2>
+    <p id="mission"></p>
+    <p id="fact"></p>
+  </div>
+</div>
 
 <script>
 
-/* 🌌 stars */
-const canvas = document.getElementById("space");
-const ctx = canvas.getContext("2d");
+/* 🔎 SEARCH */
+function searchCards(){
+let v=document.getElementById("search").value.toLowerCase();
+document.querySelectorAll(".card").forEach(c=>{
+c.style.display=c.innerText.toLowerCase().includes(v)?"block":"none";
+});
+}
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+/* 🧑‍🚀 MODAL */
+function openModal(n,m,f,i){
+document.getElementById("modal").style.display="flex";
+document.getElementById("name").innerText=n;
+document.getElementById("mission").innerText=m;
+document.getElementById("fact").innerText=f;
+document.getElementById("img").src=i;
+}
 
-let stars = Array(200).fill().map(()=>({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*2
-}));
+function closeModal(){
+document.getElementById("modal").style.display="none";
+}
+
+/* 🌌 STARS */
+const c=document.getElementById("space");
+const x=c.getContext("2d");
+c.width=innerWidth;
+c.height=innerHeight;
+
+let s=Array(200).fill().map(()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2}));
 
 function draw(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="white";
-
-stars.forEach(s=>{
-ctx.beginPath();
-ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-ctx.fill();
-s.y += 0.3;
-if(s.y>canvas.height) s.y=0;
+x.clearRect(0,0,c.width,c.height);
+x.fillStyle="white";
+s.forEach(p=>{
+x.beginPath();
+x.arc(p.x,p.y,p.r,0,6.28);
+x.fill();
+p.y+=0.3;
+if(p.y>c.height)p.y=0;
 });
-
 requestAnimationFrame(draw);
 }
 draw();
 
-/* 🌍 earth (3D) */
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000);
+/* 🌍 EARTH */
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);
+const renderer=new THREE.WebGLRenderer({canvas:document.getElementById("earth"),alpha:true});
+renderer.setSize(innerWidth,innerHeight);
 
-const renderer = new THREE.WebGLRenderer({canvas:document.getElementById("earth"), alpha:true});
-renderer.setSize(innerWidth, innerHeight);
+const geo=new THREE.SphereGeometry(2,32,32);
+const tex=new THREE.TextureLoader().load("https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg");
+const mat=new THREE.MeshBasicMaterial({map:tex});
+const earth=new THREE.Mesh(geo,mat);
 
-const geometry = new THREE.SphereGeometry(2, 32, 32);
-const texture = new THREE.TextureLoader().load("https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg");
-const material = new THREE.MeshBasicMaterial({map:texture});
-
-const earth = new THREE.Mesh(geometry, material);
 scene.add(earth);
-
-camera.position.z = 6;
+camera.position.z=6;
 
 function animate(){
 requestAnimationFrame(animate);
-earth.rotation.y += 0.002;
-renderer.render(scene, camera);
+earth.rotation.y+=0.002;
+renderer.render(scene,camera);
 }
 animate();
 
-/* 🔊 sound */
-function toggleSound(){
-let audio=document.getElementById("audio");
-if(audio.paused){
-audio.play();
-alert("Space sound ON 🚀");
-}else{
-audio.pause();
-alert("Space sound OFF");
-}
-}
-
-/* 📜 scroll status */
+/* 📜 STATUS */
 window.addEventListener("scroll",()=>{
-document.getElementById("status").innerText =
-window.scrollY > 200 ? "STATUS: ORBITING 🌍" : "STATUS: ACTIVE 🚀";
+document.getElementById("status").innerText=
+window.scrollY>200?"STATUS: ORBITING 🌍":"STATUS: ACTIVE 🚀";
 });
 
 </script>

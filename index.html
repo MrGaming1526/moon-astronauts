@@ -1,162 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Moon Landing Astronauts</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: linear-gradient(to bottom, #020111, #191970);
-      color: white;
-    }
-    header {
-      background: #111827;
-      padding: 20px;
-      text-align: center;
-    }
-    h1 { margin: 0; }
-    .subtitle { color: #9ca3af; margin-top: 8px; }
-    .container {
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: #1f2937;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.6);
-      transition: transform 0.3s;
-    }
-    .card:hover {
-      transform: scale(1.05);
-    }
-    .card img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #111827;
-      margin-top: 20px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NASA Apollo GOD MODE</title>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-family: Arial;
+  color: white;
+  background: black;
+}
+
+/* 🌌 canvas layers */
+#space, #earth {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 🧑‍🚀 intro */
+.intro {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.intro h1 {
+  font-family: Orbitron;
+  font-size: 40px;
+}
+
+.intro p {
+  color: #aaa;
+}
+
+/* 🛰️ HUD */
+.hud {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: rgba(0,0,0,0.6);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+/* scroll sections */
+.section {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  text-align: center;
+  padding: 20px;
+}
+
+/* cards */
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 15px;
+  backdrop-filter: blur(8px);
+  max-width: 500px;
+}
+</style>
 </head>
+
 <body>
 
-<header>
-  <h1>Astronauts Who Walked on the Moon</h1>
-  <p class="subtitle">All 12 astronauts who walked on the Moon (1969–1972)</p>
-</header>
+<!-- 🌌 star canvas -->
+<canvas id="space"></canvas>
 
-<div class="container">
+<!-- 🌍 3D Earth -->
+<canvas id="earth"></canvas>
 
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Neil_Armstrong_pose.jpg">
-    <h2>Neil Armstrong</h2>
-    <p><strong>Mission:</strong> Apollo 11</p>
-    <p><strong>Year:</strong> 1969</p>
-    <p>First human to walk on the Moon.</p>
-  </div>
-
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Buzz_Aldrin.jpg">
-    <h2>Buzz Aldrin</h2>
-    <p><strong>Mission:</strong> Apollo 11</p>
-    <p><strong>Year:</strong> 1969</p>
-    <p>Second person to walk on the Moon.</p>
-  </div>
-
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Charles_Conrad.jpg">
-    <h2>Charles "Pete" Conrad</h2>
-    <p><strong>Mission:</strong> Apollo 12</p>
-    <p><strong>Year:</strong> 1969</p>
-    <p>Third person on the Moon.</p>
-  </div>
-
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Alan_Bean.jpg">
-    <h2>Alan Bean</h2>
-    <p><strong>Mission:</strong> Apollo 12</p>
-    <p><strong>Year:</strong> 1969</p>
-    <p>Fourth person on the Moon.</p>
-  </div>
-
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Shepard.jpg">
-    <h2>Alan Shepard</h2>
-    <p><strong>Mission:</strong> Apollo 14</p>
-    <p><strong>Year:</strong> 1971</p>
-    <p>Fifth person on the Moon.</p>
-  </div>
-
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Edgar_Mitchell.jpg">
-    <h2>Edgar Mitchell</h2>
-    <p><strong>Mission:</strong> Apollo 14</p>
-    <p><strong>Year:</strong> 1971</p>
-    <p>Sixth person on the Moon.</p>
-  </div>
-
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/David_Scott.jpg">
-    <h2>David Scott</h2>
-    <p><strong>Mission:</strong> Apollo 15</p>
-    <p><strong>Year:</strong> 1971</p>
-    <p>Seventh person on the Moon.</p>
-  </div>
-
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/James_Irwin.jpg">
-    <h2>James Irwin</h2>
-    <p><strong>Mission:</strong> Apollo 15</p>
-    <p><strong>Year:</strong> 1971</p>
-    <p>Eighth person on the Moon.</p>
-  </div>
-
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/John_Young.jpg">
-    <h2>John Young</h2>
-    <p><strong>Mission:</strong> Apollo 16</p>
-    <p><strong>Year:</strong> 1972</p>
-    <p>Ninth person on the Moon.</p>
-  </div>
-
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Charles_Duke.jpg">
-    <h2>Charles Duke</h2>
-    <p><strong>Mission:</strong> Apollo 16</p>
-    <p><strong>Year:</strong> 1972</p>
-    <p>Tenth person on the Moon.</p>
-  </div>
-
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Eugene_Cernan.jpg">
-    <h2>Eugene Cernan</h2>
-    <p><strong>Mission:</strong> Apollo 17</p>
-    <p><strong>Year:</strong> 1972</p>
-    <p>Second to last person on the Moon.</p>
-  </div>
-
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Harrison_Schmitt.jpg">
-    <h2>Harrison Schmitt</h2>
-    <p><strong>Mission:</strong> Apollo 17</p>
-    <p><strong>Year:</strong> 1972</p>
-    <p>Last person to walk on the Moon.</p>
-  </div>
-
+<!-- 🛰️ HUD -->
+<div class="hud">
+  <div>MISSION: APOLLO PROGRAM</div>
+  <div id="status">STATUS: ACTIVE</div>
+  <button onclick="toggleSound()">🔊 SOUND</button>
 </div>
 
-<footer>
-  <p>Made by Avyukth Bandi | Moon Landing Project</p>
-</footer>
+<!-- 🚀 INTRO -->
+<div class="intro">
+  <h1>NASA MISSION CONTROL</h1>
+  <p>Scroll to experience Apollo Moon Missions</p>
+</div>
+
+<!-- 🧑‍🚀 STORY -->
+<div class="section">
+  <div class="card">
+    <h2>1969 — Apollo 11</h2>
+    <p>Neil Armstrong becomes the first human on the Moon.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="card">
+    <h2>First Step</h2>
+    <p>“That's one small step for man…”</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="card">
+    <h2>1972 — Apollo 17</h2>
+    <p>Last humans to walk on the Moon.</p>
+  </div>
+</div>
+
+<!-- 🔊 audio -->
+<audio id="audio" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_c8a7b8c2f3.mp3?filename=space-ambient-118841.mp3">
+</audio>
+
+<script>
+
+/* 🌌 STAR FIELD */
+const canvas = document.getElementById("space");
+const ctx = canvas.getContext("2d");
+
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+let stars = Array(200).fill().map(()=>({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2
+}));
+
+function drawStars(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="white";
+
+stars.forEach(s=>{
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+ctx.fill();
+s.y += 0.3;
+if(s.y>canvas.height) s.y=0;
+});
+
+requestAnimationFrame(drawStars);
+}
+drawStars();
+
+/* 🌍 THREE.JS EARTH */
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000);
+
+const renderer = new THREE.WebGLRenderer({canvas:document.getElementById("earth"), alpha:true});
+renderer.setSize(innerWidth, innerHeight);
+
+const geometry = new THREE.SphereGeometry(2, 32, 32);
+const texture = new THREE.TextureLoader().load("https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg");
+const material = new THREE.MeshBasicMaterial({map:texture});
+const earth = new THREE.Mesh(geometry, material);
+
+scene.add(earth);
+camera.position.z = 6;
+
+function animate(){
+requestAnimationFrame(animate);
+earth.rotation.y += 0.002;
+renderer.render(scene, camera);
+}
+animate();
+
+/* 🔊 sound */
+function toggleSound(){
+let a=document.getElementById("audio");
+if(a.paused){a.play(); alert("Space ambience ON 🚀");}
+else {a.pause(); alert("Space ambience OFF");}
+}
+
+/* 📜 scroll effects */
+window.addEventListener("scroll",()=>{
+document.getElementById("status").innerText =
+window.scrollY > 200 ? "STATUS: ORBITING" : "STATUS: ACTIVE";
+});
+
+</script>
 
 </body>
 </html>

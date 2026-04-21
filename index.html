@@ -13,12 +13,12 @@
 body {
   margin: 0;
   overflow-x: hidden;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   color: white;
   background: black;
 }
 
-/* 🌌 canvas layers */
+/* 🌌 star canvas */
 #space, #earth {
   position: fixed;
   top: 0;
@@ -57,34 +57,41 @@ body {
   font-size: 12px;
 }
 
-/* scroll sections */
+/* sections */
 .section {
   height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 28px;
-  text-align: center;
-  padding: 20px;
+  align-items: center;
 }
 
-/* cards */
 .card {
   background: rgba(255,255,255,0.08);
   padding: 20px;
   border-radius: 15px;
-  backdrop-filter: blur(8px);
   max-width: 500px;
+  backdrop-filter: blur(8px);
+  text-align: center;
+}
+
+/* button */
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #3b82f6;
+  color: white;
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🌌 star canvas -->
+<!-- 🌌 stars -->
 <canvas id="space"></canvas>
 
-<!-- 🌍 3D Earth -->
+<!-- 🌍 earth -->
 <canvas id="earth"></canvas>
 
 <!-- 🛰️ HUD -->
@@ -94,31 +101,31 @@ body {
   <button onclick="toggleSound()">🔊 SOUND</button>
 </div>
 
-<!-- 🚀 INTRO -->
+<!-- 🚀 intro -->
 <div class="intro">
   <h1>NASA MISSION CONTROL</h1>
-  <p>Scroll to experience Apollo Moon Missions</p>
+  <p>Scroll to explore Apollo Moon missions</p>
 </div>
 
-<!-- 🧑‍🚀 STORY -->
+<!-- 🧑‍🚀 story -->
 <div class="section">
   <div class="card">
     <h2>1969 — Apollo 11</h2>
-    <p>Neil Armstrong becomes the first human on the Moon.</p>
+    <p>Neil Armstrong becomes first human on the Moon.</p>
   </div>
 </div>
 
 <div class="section">
   <div class="card">
-    <h2>First Step</h2>
-    <p>“That's one small step for man…”</p>
+    <h2>“One small step…”</h2>
+    <p>The most famous words in space history.</p>
   </div>
 </div>
 
 <div class="section">
   <div class="card">
     <h2>1972 — Apollo 17</h2>
-    <p>Last humans to walk on the Moon.</p>
+    <p>Final Moon landing mission.</p>
   </div>
 </div>
 
@@ -129,7 +136,7 @@ body {
 
 <script>
 
-/* 🌌 STAR FIELD */
+/* 🌌 stars */
 const canvas = document.getElementById("space");
 const ctx = canvas.getContext("2d");
 
@@ -142,7 +149,7 @@ y:Math.random()*canvas.height,
 r:Math.random()*2
 }));
 
-function drawStars(){
+function draw(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
 ctx.fillStyle="white";
 
@@ -154,11 +161,11 @@ s.y += 0.3;
 if(s.y>canvas.height) s.y=0;
 });
 
-requestAnimationFrame(drawStars);
+requestAnimationFrame(draw);
 }
-drawStars();
+draw();
 
-/* 🌍 THREE.JS EARTH */
+/* 🌍 earth (3D) */
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000);
 
@@ -168,9 +175,10 @@ renderer.setSize(innerWidth, innerHeight);
 const geometry = new THREE.SphereGeometry(2, 32, 32);
 const texture = new THREE.TextureLoader().load("https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg");
 const material = new THREE.MeshBasicMaterial({map:texture});
-const earth = new THREE.Mesh(geometry, material);
 
+const earth = new THREE.Mesh(geometry, material);
 scene.add(earth);
+
 camera.position.z = 6;
 
 function animate(){
@@ -182,15 +190,20 @@ animate();
 
 /* 🔊 sound */
 function toggleSound(){
-let a=document.getElementById("audio");
-if(a.paused){a.play(); alert("Space ambience ON 🚀");}
-else {a.pause(); alert("Space ambience OFF");}
+let audio=document.getElementById("audio");
+if(audio.paused){
+audio.play();
+alert("Space sound ON 🚀");
+}else{
+audio.pause();
+alert("Space sound OFF");
+}
 }
 
-/* 📜 scroll effects */
+/* 📜 scroll status */
 window.addEventListener("scroll",()=>{
 document.getElementById("status").innerText =
-window.scrollY > 200 ? "STATUS: ORBITING" : "STATUS: ACTIVE";
+window.scrollY > 200 ? "STATUS: ORBITING 🌍" : "STATUS: ACTIVE 🚀";
 });
 
 </script>

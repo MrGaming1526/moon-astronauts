@@ -3,282 +3,195 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NASA Hybrid Mission Control</title>
-
-<script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+<title>Moon Landing Astronauts</title>
 
 <style>
 body {
   margin: 0;
-  font-family: Arial;
-  background: black;
+  font-family: Arial, sans-serif;
+  background: #0b1020;
   color: white;
-  overflow-x: hidden;
-}
-
-/* 🌌 CANVAS LAYERS */
-#space, #earth {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-}
-
-/* 🛰️ HUD */
-.hud {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  background: rgba(0,0,0,0.6);
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 12px;
-  z-index: 10;
 }
 
 /* HEADER */
 header {
+  background: #111827;
   text-align: center;
-  padding: 30px;
-  font-family: Orbitron;
+  padding: 25px;
+}
+
+h1 {
+  margin: 0;
+}
+
+.subtitle {
+  color: #9ca3af;
 }
 
 /* SEARCH */
 .search {
   text-align: center;
-  margin: 10px;
+  margin: 20px;
 }
 
 input {
   padding: 10px;
   width: 60%;
-  border-radius: 10px;
+  border-radius: 8px;
   border: none;
 }
 
-/* 🧑‍🚀 GRID */
+/* GRID */
 .container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 15px;
   padding: 20px;
 }
 
+/* CARD */
 .card {
-  background: rgba(255,255,255,0.08);
-  padding: 10px;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: 0.3s;
+  background: #1f2937;
+  padding: 15px;
+  border-radius: 12px;
+  transition: 0.2s;
 }
 
 .card:hover {
-  transform: scale(1.07);
+  transform: scale(1.03);
 }
 
-.card img {
+.card h3 {
+  margin: 10px 0 5px;
+  color: #60a5fa;
+}
+
+.card p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+/* IMAGE */
+img {
   width: 100%;
   border-radius: 10px;
 }
 
-/* 🌌 STORY */
-.section {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.box {
-  background: rgba(255,255,255,0.08);
-  padding: 20px;
-  border-radius: 15px;
-  max-width: 500px;
+/* FOOTER */
+footer {
   text-align: center;
-  backdrop-filter: blur(8px);
-}
-
-/* MODAL */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background: #111;
-  padding: 20px;
-  border-radius: 15px;
-  width: 300px;
-  text-align: center;
-}
-
-.modal img {
-  width: 100%;
-  border-radius: 10px;
+  padding: 15px;
+  background: #111827;
+  margin-top: 20px;
+  font-size: 14px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🌌 STARS -->
-<canvas id="space"></canvas>
-
-<!-- 🌍 EARTH -->
-<canvas id="earth"></canvas>
-
-<!-- 🛰️ HUD -->
-<div class="hud">
-  <div>MISSION CONTROL: APOLLO</div>
-  <div id="status">STATUS: ACTIVE</div>
-</div>
-
 <header>
-  <h1>NASA HYBRID MISSION CONTROL 🚀</h1>
+<h1>Moon Landing Astronauts 🚀</h1>
+<p class="subtitle">All astronauts who walked on the Moon (1969–1972)</p>
+<p>Created by Avyukth Bandi</p>
 </header>
 
-<!-- 🔎 SEARCH -->
+<!-- SEARCH -->
 <div class="search">
 <input id="search" placeholder="Search astronaut..." onkeyup="searchCards()">
 </div>
 
-<!-- 🧑‍🚀 ASTRONAUT DATABASE -->
+<!-- ASTRONAUT LIST -->
 <div class="container" id="cards">
 
-<div class="card" onclick="openModal('Neil Armstrong','Apollo 11','First human on Moon','https://images-assets.nasa.gov/image/AS11-40-5903/AS11-40-5903~orig.jpg')">
-<img src="https://images-assets.nasa.gov/image/AS11-40-5903/AS11-40-5903~orig.jpg">
+<div class="card">
 <h3>Neil Armstrong</h3>
+<p>Apollo 11 (1969)</p>
+<p>First human to walk on the Moon</p>
 </div>
 
-<div class="card" onclick="openModal('Buzz Aldrin','Apollo 11','Second human on Moon','https://images-assets.nasa.gov/image/AS11-40-5904/AS11-40-5904~orig.jpg')">
-<img src="https://images-assets.nasa.gov/image/AS11-40-5904/AS11-40-5904~orig.jpg">
+<div class="card">
 <h3>Buzz Aldrin</h3>
+<p>Apollo 11 (1969)</p>
+<p>Second human on the Moon</p>
 </div>
 
-<div class="card" onclick="openModal('Alan Shepard','Apollo 14','Fifth human on Moon','https://images-assets.nasa.gov/image/AS14-66-9304/AS14-66-9304~orig.jpg')">
-<img src="https://images-assets.nasa.gov/image/AS14-66-9304/AS14-66-9304~orig.jpg">
+<div class="card">
+<h3>Charles “Pete” Conrad</h3>
+<p>Apollo 12 (1969)</p>
+<p>Third human on the Moon</p>
+</div>
+
+<div class="card">
+<h3>Alan Bean</h3>
+<p>Apollo 12 (1969)</p>
+<p>Fourth human on the Moon</p>
+</div>
+
+<div class="card">
 <h3>Alan Shepard</h3>
+<p>Apollo 14 (1971)</p>
+<p>Fifth human on the Moon</p>
 </div>
 
-<div class="card" onclick="openModal('Eugene Cernan','Apollo 17','Last human on Moon','https://images-assets.nasa.gov/image/AS17-134-20382/AS17-134-20382~orig.jpg')">
-<img src="https://images-assets.nasa.gov/image/AS17-134-20382/AS17-134-20382~orig.jpg">
+<div class="card">
+<h3>Edgar Mitchell</h3>
+<p>Apollo 14 (1971)</p>
+<p>Sixth human on the Moon</p>
+</div>
+
+<div class="card">
+<h3>David Scott</h3>
+<p>Apollo 15 (1971)</p>
+<p>Seventh human on the Moon</p>
+</div>
+
+<div class="card">
+<h3>James Irwin</h3>
+<p>Apollo 15 (1971)</p>
+<p>Eighth human on the Moon</p>
+</div>
+
+<div class="card">
+<h3>John Young</h3>
+<p>Apollo 16 (1972)</p>
+<p>Ninth human on the Moon</p>
+</div>
+
+<div class="card">
+<h3>Charles Duke</h3>
+<p>Apollo 16 (1972)</p>
+<p>Tenth human on the Moon</p>
+</div>
+
+<div class="card">
 <h3>Eugene Cernan</h3>
+<p>Apollo 17 (1972)</p>
+<p>Last human to walk on the Moon</p>
+</div>
+
+<div class="card">
+<h3>Harrison Schmitt</h3>
+<p>Apollo 17 (1972)</p>
+<p>Geologist and final astronaut on the Moon</p>
 </div>
 
 </div>
 
-<!-- 🌌 STORY MODE -->
-<div class="section">
-  <div class="box">
-    <h2>Apollo 11 (1969)</h2>
-    <p>First human landing on the Moon.</p>
-  </div>
-</div>
-
-<div class="section">
-  <div class="box">
-    <h2>Apollo 12–15</h2>
-    <p>Scientific exploration missions across lunar surface.</p>
-  </div>
-</div>
-
-<div class="section">
-  <div class="box">
-    <h2>Apollo 17 (1972)</h2>
-    <p>Final mission to the Moon — end of Apollo era.</p>
-  </div>
-</div>
-
-<!-- 🪐 MODAL -->
-<div class="modal" id="modal" onclick="closeModal()">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <img id="img">
-    <h2 id="name"></h2>
-    <p id="mission"></p>
-    <p id="fact"></p>
-  </div>
-</div>
+<footer>
+Moon Landing Project | Informational Website
+</footer>
 
 <script>
-
-/* 🔎 SEARCH */
 function searchCards(){
-let v=document.getElementById("search").value.toLowerCase();
-document.querySelectorAll(".card").forEach(c=>{
-c.style.display=c.innerText.toLowerCase().includes(v)?"block":"none";
+let input = document.getElementById("search").value.toLowerCase();
+let cards = document.querySelectorAll(".card");
+
+cards.forEach(card=>{
+card.style.display = card.innerText.toLowerCase().includes(input)
+? "block" : "none";
 });
 }
-
-/* 🧑‍🚀 MODAL */
-function openModal(n,m,f,i){
-document.getElementById("modal").style.display="flex";
-document.getElementById("name").innerText=n;
-document.getElementById("mission").innerText=m;
-document.getElementById("fact").innerText=f;
-document.getElementById("img").src=i;
-}
-
-function closeModal(){
-document.getElementById("modal").style.display="none";
-}
-
-/* 🌌 STARS */
-const c=document.getElementById("space");
-const x=c.getContext("2d");
-c.width=innerWidth;
-c.height=innerHeight;
-
-let s=Array(200).fill().map(()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2}));
-
-function draw(){
-x.clearRect(0,0,c.width,c.height);
-x.fillStyle="white";
-s.forEach(p=>{
-x.beginPath();
-x.arc(p.x,p.y,p.r,0,6.28);
-x.fill();
-p.y+=0.3;
-if(p.y>c.height)p.y=0;
-});
-requestAnimationFrame(draw);
-}
-draw();
-
-/* 🌍 EARTH */
-const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);
-const renderer=new THREE.WebGLRenderer({canvas:document.getElementById("earth"),alpha:true});
-renderer.setSize(innerWidth,innerHeight);
-
-const geo=new THREE.SphereGeometry(2,32,32);
-const tex=new THREE.TextureLoader().load("https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg");
-const mat=new THREE.MeshBasicMaterial({map:tex});
-const earth=new THREE.Mesh(geo,mat);
-
-scene.add(earth);
-camera.position.z=6;
-
-function animate(){
-requestAnimationFrame(animate);
-earth.rotation.y+=0.002;
-renderer.render(scene,camera);
-}
-animate();
-
-/* 📜 STATUS */
-window.addEventListener("scroll",()=>{
-document.getElementById("status").innerText=
-window.scrollY>200?"STATUS: ORBITING 🌍":"STATUS: ACTIVE 🚀";
-});
-
 </script>
 
 </body>
